@@ -17,3 +17,6 @@ jobs:
       - name: tests
         working-directory: ./build/tests
         run: ctest
+      - name: benchmarks
+        working-directory: ./build/benchmarks
+        run: ./benchmark_tests

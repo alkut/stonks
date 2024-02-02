@@ -60,7 +60,7 @@
 
 #ifndef STONKS_DO_PRAGMA
     #if defined(_MSC_VER)
-        #define STONKS_DO_PRAGMA(x) __pragma(#x)
+        #define STONKS_DO_PRAGMA(x) __pragma(x)
     #else
         #define STONKS_DO_PRAGMA(x) _Pragma (#x)
     #endif
