@@ -7,7 +7,7 @@ else ()
     # As alternative, just paste it here:
     #
     if (NOT ${STONKS_RUN_ON_CI})
-        set(CMAKE_TOOLCHAIN_FILE C:/Users/ALEKSEY/vcpkg/scripts/buildsystems/vcpkg.cmake)
+        #set(CMAKE_TOOLCHAIN_FILE C:/Users/ALEKSEY/vcpkg/scripts/buildsystems/vcpkg.cmake)
     endif ()
 
     if (DEFINED CMAKE_TOOLCHAIN_FILE)
