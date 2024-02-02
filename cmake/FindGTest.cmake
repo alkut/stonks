@@ -1,6 +1,6 @@
 find_package(GTest 1.11 CONFIG)
 
-if(NOT ${GTest_FOUND})
+if (NOT ${GTest_FOUND})
 
     message(STATUS "Can't find GTest locally, fetching from github")
 
@@ -17,7 +17,6 @@ if(NOT ${GTest_FOUND})
             CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
 
-endif()
+endif ()
 
 include(GoogleTest)
-

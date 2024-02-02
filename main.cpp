@@ -33,9 +33,8 @@ int main() {
         book.AddOrder(i, 1, STONKS_NAMESPACE::Order::order_type::sell);
     }
     book.ChooseBest(orders, orders + countBuy);
-    for (auto & order : orders) {
-        std::cout <<  order.price << " " << order.amount <<  " " <<
-                (order.type == STONKS_NAMESPACE::Order::order_type::buy ? "buy" : "sell") << '\n';
+    for (auto &order: orders) {
+        std::cout << order.price << " " << order.amount << " " << (order.type == STONKS_NAMESPACE::Order::order_type::buy ? "buy" : "sell") << '\n';
     }
     return 0;
 }

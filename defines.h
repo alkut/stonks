@@ -26,74 +26,74 @@
 #include <cassert>
 
 #ifndef STONKS_NAMESPACE
-    #define STONKS_NAMESPACE stonks
+#define STONKS_NAMESPACE stonks
 #endif
 
 #ifndef STONKS_ASSERT
 #define STONKS_ASSERT(condition, formatted_message, ...) \
-        do {                                             \
-              assert(condition);                         \
-        } while (false);
+    do {                                                 \
+        assert(condition);                               \
+    } while (false);
 #endif
 
 #ifndef STONKS_DYNAMIC_LIB
-    #define STONKS_DYNAMIC_LIB false
+#define STONKS_DYNAMIC_LIB false
 #endif
 
 #ifndef STONKS_API
-    #if STONKS_DYNAMIC_LIB
-        #define STONKS_API __declspec(dllexport)
-    #else
-        #define STONKS_API
-    #endif
+#if STONKS_DYNAMIC_LIB
+#define STONKS_API __declspec(dllexport)
+#else
+#define STONKS_API
+#endif
 #endif
 
 #ifndef STONKS_ALWAYS_INLINE
-    #ifdef __GNUC__
-        #define STONKS_ALWAYS_INLINE __attribute__((always_inline))
-    #elif defined(_MSC_VER)
-        #define STONKS_ALWAYS_INLINE __forceinline
-    #else
-        #define STONKS_ALWAYS_INLINE inline
-    #endif
+#ifdef __GNUC__
+#define STONKS_ALWAYS_INLINE __attribute__((always_inline))
+#elif defined(_MSC_VER)
+#define STONKS_ALWAYS_INLINE __forceinline
+#else
+#define STONKS_ALWAYS_INLINE inline
+#endif
 #endif
 
 #ifndef STONKS_DO_PRAGMA
-    #if defined(_MSC_VER)
-        #define STONKS_DO_PRAGMA(x) __pragma(x)
-    #else
-        #define STONKS_DO_PRAGMA(x) _Pragma (#x)
-    #endif
+#if defined(_MSC_VER)
+#define STONKS_DO_PRAGMA(x) __pragma(x)
+#else
+#define STONKS_DO_PRAGMA(x) _Pragma(#x)
+#endif
 #endif
 
 #ifndef STONKS_DIAGNOSTIC_PUSH
-    #ifdef __GNUC__
-        #define STONKS_DIAGNOSTIC_PUSH STONKS_DO_PRAGMA(gcc diagnostic push)
-    #elif defined(_MSC_VER)
-        #define STONKS_DIAGNOSTIC_PUSH STONKS_DO_PRAGMA(warning(push))
-    #else
-        #define STONKS_DIAGNOSTIC_PUSH STONKS_DO_PRAGMA(clang diagnostic push)
-    #endif
+#ifdef __GNUC__
+#define STONKS_DIAGNOSTIC_PUSH STONKS_DO_PRAGMA(gcc diagnostic push)
+#elif defined(_MSC_VER)
+#define STONKS_DIAGNOSTIC_PUSH STONKS_DO_PRAGMA(warning(push))
+#else
+#define STONKS_DIAGNOSTIC_PUSH STONKS_DO_PRAGMA(clang diagnostic push)
+#endif
 #endif
 
 #ifndef STONKS_DIAGNOSTIC_POP
-    #ifdef __GNUC__
-        #define STONKS_DIAGNOSTIC_POP STONKS_DO_PRAGMA(GCC diagnostic pop)
-    #elif defined(_MSC_VER)
-        #define STONKS_DIAGNOSTIC_POP STONKS_DO_PRAGMA(warning(pop))
-    #else
-        #define STONKS_DIAGNOSTIC_POP STONKS_DO_PRAGMA(clang diagnostic pop)
-    #endif
+#ifdef __GNUC__
+#define STONKS_DIAGNOSTIC_POP STONKS_DO_PRAGMA(GCC diagnostic pop)
+#elif defined(_MSC_VER)
+#define STONKS_DIAGNOSTIC_POP STONKS_DO_PRAGMA(warning(pop))
+#else
+#define STONKS_DIAGNOSTIC_POP STONKS_DO_PRAGMA(clang diagnostic pop)
+#endif
 #endif
 
 #ifndef STONKS_DIAGNOSTIC_ATTRIBUTE
-    #ifdef __GNUC__
-        #define STONKS_DIAGNOSTIC_ATTRIBUTE STONKS_DO_PRAGMA(GCC diagnostic ignored "-Wattributes")
-    #elif defined(_MSC_VER)
-        #define STONKS_DIAGNOSTIC_ATTRIBUTE
-    #else
-        #define STONKS_DIAGNOSTIC_ATTRIBUTE STONKS_DO_PRAGMA(clang diagnostic ignored "-Wattributes")
-    #endif
+#ifdef __GNUC__
+#define STONKS_DIAGNOSTIC_ATTRIBUTE STONKS_DO_PRAGMA(GCC diagnostic ignored "-Wattributes")
+#elif defined(_MSC_VER)
+#define STONKS_DIAGNOSTIC_ATTRIBUTE
+#else
+#define STONKS_DIAGNOSTIC_ATTRIBUTE STONKS_DO_PRAGMA(clang diagnostic ignored "-Wattributes")
+#endif
 #endif
 
-#endif // #ifndef STONKS_DEFINE
+#endif// #ifndef STONKS_DEFINE

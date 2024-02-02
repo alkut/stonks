@@ -24,8 +24,8 @@
 #define STONKS_ORDER_H
 
 #include "utils/defines.h"
-#include <cstdint>
 #include <cstddef>
+#include <cstdint>
 
 #if __cplusplus >= 202002L
 #include <compare>
@@ -33,23 +33,23 @@
 
 namespace STONKS_NAMESPACE {
 
-struct STONKS_API Order final {
-public:
-    enum class order_type : uint8_t {
-        buy = 0,
-        sell = 1,
-    };
-    size_t price;
-    size_t amount;
-    order_type type;
+    struct STONKS_API Order final {
+    public:
+        enum class order_type : uint8_t {
+            buy = 0,
+            sell = 1,
+        };
+        size_t price;
+        size_t amount;
+        order_type type;
 
-    bool operator<(const Order &other) const;
+        bool operator<(const Order &other) const;
 
 #if __cplusplus >= 202002L
-    std::strong_ordering operator<=>(const Order &other) const;
+        std::strong_ordering operator<=>(const Order &other) const;
 #endif
-};
+    };
 
-} // end namespace STONKS_NAMESPACE
+}// end namespace STONKS_NAMESPACE
 
-#endif // #ifndef STONKS_ORDER_H
+#endif// #ifndef STONKS_ORDER_H

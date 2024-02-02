@@ -21,41 +21,41 @@
 
 namespace STONKS_NAMESPACE {
 
-Book::Book(size_t buyBestCount, size_t sellBestCount) : m_bestBuyStorage(buyBestCount), m_bestSellStorage(sellBestCount) {}
+    Book::Book(size_t buyBestCount, size_t sellBestCount) : m_bestBuyStorage(buyBestCount), m_bestSellStorage(sellBestCount) {}
 
-void Book::AddOrder(size_t price, size_t amount, Order::order_type type) {
-    switch (type) {
-        case Order::order_type::buy:
-            m_bestBuyStorage.Emplace(price, amount);
-            return;
-        case Order::order_type::sell:
-            m_bestSellStorage.Emplace(price, amount);
-            return;
+    void Book::AddOrder(size_t price, size_t amount, Order::order_type type) {
+        switch (type) {
+            case Order::order_type::buy:
+                m_bestBuyStorage.Emplace(price, amount);
+                return;
+            case Order::order_type::sell:
+                m_bestSellStorage.Emplace(price, amount);
+                return;
+        }
+        STONKS_ASSERT(false, "unhandled order type");
     }
-    STONKS_ASSERT(false, "unhandled order type");
-}
 
-bool Book::ChangeOrder(size_t price, size_t newAmount, Order::order_type type) {
-    switch (type) {
-        case Order::order_type::buy:
-            return m_bestBuyStorage.Change(price, newAmount).second;
-        case Order::order_type::sell:
-            return m_bestSellStorage.Change(price, newAmount).second;
+    bool Book::ChangeOrder(size_t price, size_t newAmount, Order::order_type type) {
+        switch (type) {
+            case Order::order_type::buy:
+                return m_bestBuyStorage.Change(price, newAmount).second;
+            case Order::order_type::sell:
+                return m_bestSellStorage.Change(price, newAmount).second;
+        }
+        STONKS_ASSERT(false, "unhandled order type");
+        return false;
     }
-    STONKS_ASSERT(false, "unhandled order type");
-    return false;
-}
 
-void Book::EraseOrder(size_t price, Order::order_type type) {
-    switch (type) {
-        case Order::order_type::buy:
-            m_bestBuyStorage.Erase(price);
-            return;
-        case Order::order_type::sell:
-            m_bestSellStorage.Erase(price);
-            return;
+    void Book::EraseOrder(size_t price, Order::order_type type) {
+        switch (type) {
+            case Order::order_type::buy:
+                m_bestBuyStorage.Erase(price);
+                return;
+            case Order::order_type::sell:
+                m_bestSellStorage.Erase(price);
+                return;
+        }
+        STONKS_ASSERT(false, "unhandled order type");
     }
-    STONKS_ASSERT(false, "unhandled order type");
-}
 
-} // end namespace STONKS_NAMESPACE
+}// end namespace STONKS_NAMESPACE

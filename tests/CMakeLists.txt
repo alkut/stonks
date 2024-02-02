@@ -12,5 +12,4 @@ target_include_directories(tests PRIVATE ${PROJECT_SOURCE_DIR}/../src)
 gtest_add_tests(
         TARGET tests
         TEST_PREFIX BasicTests---
-        TEST_SUFFIX ---BasicTests
-)
+        TEST_SUFFIX ---BasicTests)

@@ -29,38 +29,38 @@ STONKS_DIAGNOSTIC_PUSH
 
 namespace STONKS_NAMESPACE {
 
-template<typename OutputIterator, typename Transform, typename ProxyValue>
-STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::OutputIteratorProxy(OutputIterator first, Transform transform) : m_iterator(first), m_transform(transform) {}
+    template<typename OutputIterator, typename Transform, typename ProxyValue>
+    STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::OutputIteratorProxy(OutputIterator first, Transform transform) : m_iterator(first), m_transform(transform) {}
 
-template<typename OutputIterator, typename Transform, typename ProxyValue>
-STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator++(int) {
-    return *this;
-}
+    template<typename OutputIterator, typename Transform, typename ProxyValue>
+    STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator++(int) {
+        return *this;
+    }
 
-template<typename OutputIterator, typename Transform, typename ProxyValue>
-STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator++() {
-    return *this;
-}
+    template<typename OutputIterator, typename Transform, typename ProxyValue>
+    STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator++() {
+        return *this;
+    }
 
-template<typename OutputIterator, typename Transform, typename ProxyValue>
-STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator*() {
-    return *this;
-}
+    template<typename OutputIterator, typename Transform, typename ProxyValue>
+    STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator*() {
+        return *this;
+    }
 
-template<typename OutputIterator, typename Transform, typename ProxyValue>
-STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator=(const ProxyValue &value) {
-    *m_iterator++ = m_transform(value);
-    return *this;
-}
+    template<typename OutputIterator, typename Transform, typename ProxyValue>
+    STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator=(const ProxyValue &value) {
+        *m_iterator++ = m_transform(value);
+        return *this;
+    }
 
-template<typename OutputIterator, typename Transform, typename ProxyValue>
-STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator OutputIterator() const {
-    return m_iterator;
-}
+    template<typename OutputIterator, typename Transform, typename ProxyValue>
+    STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator OutputIterator() const {
+        return m_iterator;
+    }
 
-} // end namespace STONKS_NAMESPACE
+}// end namespace STONKS_NAMESPACE
 
 STONKS_DIAGNOSTIC_ATTRIBUTE
 STONKS_DIAGNOSTIC_POP
 
-#endif // #ifndef STONKS_UTILS_PROXY_OUTPUT_ITERATOR
+#endif// #ifndef STONKS_UTILS_PROXY_OUTPUT_ITERATOR

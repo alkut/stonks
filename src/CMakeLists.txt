@@ -21,7 +21,7 @@ add_library(stonks::order_book ALIAS order_book_lib)
 
 target_include_directories(order_book_lib PRIVATE ${PROJECT_SOURCE_DIR})
 
-if(${STONKS_ENABLE_INSTALL})
+if (${STONKS_ENABLE_INSTALL})
     install(
             TARGETS order_book_lib
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -34,4 +34,4 @@ if(${STONKS_ENABLE_INSTALL})
             DIRECTORY "${PROJECT_SOURCE_DIR}/include/stonks" "${PROJECT_BINARY_DIR}/include/stonks"
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
             FILES ${order_book_lib_headers})
-endif()
+endif ()

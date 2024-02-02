@@ -27,21 +27,21 @@
 
 namespace STONKS_NAMESPACE {
 
-template<typename OutputIterator, typename Transform, typename ProxyValue>
-class STONKS_API OutputIteratorProxy {
-public:
-    explicit OutputIteratorProxy(OutputIterator first, Transform transform = {});
-    OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++(int);
-    OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++();
-    OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator*();
-    OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator=(const ProxyValue &value);
-    operator OutputIterator() const;
+    template<typename OutputIterator, typename Transform, typename ProxyValue>
+    class STONKS_API OutputIteratorProxy {
+    public:
+        explicit OutputIteratorProxy(OutputIterator first, Transform transform = {});
+        OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++(int);
+        OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++();
+        OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator*();
+        OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator=(const ProxyValue &value);
+        operator OutputIterator() const;
 
-private:
-    OutputIterator m_iterator;
-    Transform m_transform;
-};
+    private:
+        OutputIterator m_iterator;
+        Transform m_transform;
+    };
 
-} // end namespace STONKS_NAMESPACE
+}// end namespace STONKS_NAMESPACE
 
-#endif // #ifndef STONKS_UTILS_PROXY_OUTPUT_ITERATOR_FWD
+#endif// #ifndef STONKS_UTILS_PROXY_OUTPUT_ITERATOR_FWD

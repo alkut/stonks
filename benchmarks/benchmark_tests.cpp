@@ -11,7 +11,7 @@ void DifferentPrices(benchmark::State &state) {
         book.AddOrder(i, 1, STONKS_NAMESPACE::Order::order_type::buy);
         book.AddOrder(i, 1, STONKS_NAMESPACE::Order::order_type::sell);
     }
-    for (auto _ : state) {
+    for (auto _: state) {
         book.ChooseBest(ordersBuy, ordersSell);
         benchmark::ClobberMemory();
     }
@@ -27,7 +27,7 @@ void DifferentPricesX10(benchmark::State &state) {
         book.AddOrder(i, 1, STONKS_NAMESPACE::Order::order_type::buy);
         book.AddOrder(i, 1, STONKS_NAMESPACE::Order::order_type::sell);
     }
-    for (auto _ : state) {
+    for (auto _: state) {
         book.ChooseBest(ordersBuy, ordersSell);
         benchmark::ClobberMemory();
     }

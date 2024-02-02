@@ -24,4 +24,4 @@ Checks: "*,
 "
 WarningsAsErrors: '*'
 HeaderFilterRegex: '\.h'
-FormatStyle:     none
+FormatStyle: none

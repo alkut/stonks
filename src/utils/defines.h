@@ -27,4 +27,4 @@
 
 #define FIELD_TYPE(struct_name, field_name) decltype(std::declval<struct_name>().field_name)
 
-#endif // #ifndef STONKS_UTILS_DEFINES_H
+#endif// #ifndef STONKS_UTILS_DEFINES_H

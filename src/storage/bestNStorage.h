@@ -30,66 +30,66 @@ STONKS_DIAGNOSTIC_PUSH
 
 namespace STONKS_NAMESPACE {
 
-template<typename Key, typename Value, typename Compare, typename Allocator>
-STONKS_ALWAYS_INLINE BestNStorage<Key, Value, Compare, Allocator>::BestNStorage(size_t n) : m_n(n) {}
+    template<typename Key, typename Value, typename Compare, typename Allocator>
+    STONKS_ALWAYS_INLINE BestNStorage<Key, Value, Compare, Allocator>::BestNStorage(size_t n) : m_n(n) {}
 
 
-template<typename Key, typename Value, typename Compare, typename Allocator>
-template<typename OutputIterator>
-STONKS_ALWAYS_INLINE OutputIterator BestNStorage<Key, Value, Compare, Allocator>::GetBest(OutputIterator first) const {
-    size_t resultSize = 0;
-    for (const auto &it: m_map) {
-        if (resultSize++ == m_n) {
-            return first;
+    template<typename Key, typename Value, typename Compare, typename Allocator>
+    template<typename OutputIterator>
+    STONKS_ALWAYS_INLINE OutputIterator BestNStorage<Key, Value, Compare, Allocator>::GetBest(OutputIterator first) const {
+        size_t resultSize = 0;
+        for (const auto &it: m_map) {
+            if (resultSize++ == m_n) {
+                return first;
+            }
+            *first++ = it;
         }
-        *first++ = it;
+        return first;
     }
-    return first;
-}
 
-template<typename Key, typename Value, typename Compare, typename Allocator>
-STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::insert_return_type BestNStorage<Key, Value, Compare, Allocator>::Insert(std::pair<const Key, Value> value) {
-    return Emplace(value.first, value.second);
-}
-
-template<typename Key, typename Value, typename Compare, typename Allocator>
-template<typename UKey, typename UValue>
-STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::insert_return_type BestNStorage<Key, Value, Compare, Allocator>::Emplace(UKey &&key, UValue &&value) {
-    if (const auto it = m_map.find(key); it != m_map.end()) {
-        it->second += value;
-        return {it, false};
+    template<typename Key, typename Value, typename Compare, typename Allocator>
+    STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::insert_return_type BestNStorage<Key, Value, Compare, Allocator>::Insert(std::pair<const Key, Value> value) {
+        return Emplace(value.first, value.second);
     }
-    return m_map.emplace(key, value);
-}
 
-template<typename Key, typename Value, typename Compare, typename Allocator>
-STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::size_type BestNStorage<Key, Value, Compare, Allocator>::Erase(const Key &key) {
-    return m_map.erase(key);
-}
-
-template<typename Key, typename Value, typename Compare, typename Allocator>
-STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::iterator BestNStorage<Key, Value, Compare, Allocator>::Erase(typename BestNStorage<Key, Value, Compare, Allocator>::iterator it) {
-    return m_map.erase(it);
-}
-
-template<typename Key, typename Value, typename Compare, typename Allocator>
-STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::insert_return_type BestNStorage<Key, Value, Compare, Allocator>::Change(std::pair<const Key, Value> value) {
-    return Change(value.first, value.second);
-}
-
-template<typename Key, typename Value, typename Compare, typename Allocator>
-template<typename UKey, typename UValue>
-STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::insert_return_type BestNStorage<Key, Value, Compare, Allocator>::Change(UKey &&key, UValue &&value) {
-    if (const auto it = m_map.find(key); it != m_map.end()) {
-        it->second = value;
-        return {it, false};
+    template<typename Key, typename Value, typename Compare, typename Allocator>
+    template<typename UKey, typename UValue>
+    STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::insert_return_type BestNStorage<Key, Value, Compare, Allocator>::Emplace(UKey &&key, UValue &&value) {
+        if (const auto it = m_map.find(key); it != m_map.end()) {
+            it->second += value;
+            return {it, false};
+        }
+        return m_map.emplace(key, value);
     }
-    return m_map.emplace(key, value);
-}
 
-} // end namespace STONKS_NAMESPACE
+    template<typename Key, typename Value, typename Compare, typename Allocator>
+    STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::size_type BestNStorage<Key, Value, Compare, Allocator>::Erase(const Key &key) {
+        return m_map.erase(key);
+    }
+
+    template<typename Key, typename Value, typename Compare, typename Allocator>
+    STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::iterator BestNStorage<Key, Value, Compare, Allocator>::Erase(typename BestNStorage<Key, Value, Compare, Allocator>::iterator it) {
+        return m_map.erase(it);
+    }
+
+    template<typename Key, typename Value, typename Compare, typename Allocator>
+    STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::insert_return_type BestNStorage<Key, Value, Compare, Allocator>::Change(std::pair<const Key, Value> value) {
+        return Change(value.first, value.second);
+    }
+
+    template<typename Key, typename Value, typename Compare, typename Allocator>
+    template<typename UKey, typename UValue>
+    STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::insert_return_type BestNStorage<Key, Value, Compare, Allocator>::Change(UKey &&key, UValue &&value) {
+        if (const auto it = m_map.find(key); it != m_map.end()) {
+            it->second = value;
+            return {it, false};
+        }
+        return m_map.emplace(key, value);
+    }
+
+}// end namespace STONKS_NAMESPACE
 
 STONKS_DIAGNOSTIC_ATTRIBUTE
 STONKS_DIAGNOSTIC_POP
 
-#endif // #ifndef STONKS_BEST_N_STORAGE_H
+#endif// #ifndef STONKS_BEST_N_STORAGE_H

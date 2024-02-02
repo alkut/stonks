@@ -24,36 +24,36 @@
 
 namespace STONKS_NAMESPACE {
 
-bool Order::operator<(const Order &other) const {
-    if (type != other.type) {
-        STONKS_ASSERT(false, "attempt to compare orders with different types - it's illegal");
+    bool Order::operator<(const Order &other) const {
+        if (type != other.type) {
+            STONKS_ASSERT(false, "attempt to compare orders with different types - it's illegal");
+            return false;
+        }
+        switch (type) {
+            case Order::order_type::buy:
+                return price < other.price;
+            case Order::order_type::sell:
+                return other.price < price;
+        }
+        STONKS_ASSERT(false, "unhandled order type");
         return false;
     }
-    switch (type) {
-        case Order::order_type::buy:
-            return price < other.price;
-        case Order::order_type::sell:
-            return other.price < price;
-    }
-    STONKS_ASSERT(false, "unhandled order type");
-    return false;
-}
 
 #if __cplusplus >= 202002L
-std::strong_ordering Order::operator<=>(const Order &other) const {
-    if (type != other.type) {
-        STONKS_ASSERT(false, "attempt to compare orders with different types - it's illegal");
+    std::strong_ordering Order::operator<=>(const Order &other) const {
+        if (type != other.type) {
+            STONKS_ASSERT(false, "attempt to compare orders with different types - it's illegal");
+            return std::strong_ordering::less;
+        }
+        switch (type) {
+            case Order::order_type::buy:
+                return price <=> other.price;
+            case Order::order_type::sell:
+                return other.price <=> price;
+        }
+        STONKS_ASSERT(false, "unhandled order type");
         return std::strong_ordering::less;
     }
-    switch (type) {
-        case Order::order_type::buy:
-            return price <=> other.price;
-        case Order::order_type::sell:
-            return other.price <=> price;
-    }
-    STONKS_ASSERT(false, "unhandled order type");
-    return std::strong_ordering::less;
-}
 #endif
 
-} // end namespace STONKS_NAMESPACE
+}// end namespace STONKS_NAMESPACE
