@@ -70,21 +70,21 @@
 
 #ifndef STONKS_DIAGNOSTIC_POP
     #ifdef __GNUC__
-        #define STONKS_DIAGNOSTIC_POP __pragma(GCC diagnostic pop)
+        #define STONKS_DIAGNOSTIC_POP _Pragma(GCC diagnostic pop)
     #elif defined(_MSC_VER)
         #define STONKS_DIAGNOSTIC_POP __pragma(warning(pop))
     #else
-        #define STONKS_DIAGNOSTIC_POP __pragma(clang diagnostic pop)
+        #define STONKS_DIAGNOSTIC_POP _Pragma(clang diagnostic pop)
     #endif
 #endif
 
 #ifndef STONKS_DIAGNOSTIC_ATTRIBUTE
     #ifdef __GNUC__
-        #define STONKS_DIAGNOSTIC_ATTRIBUTE __pragma(GCC diagnostic ignored "-Wattributes")
+        #define STONKS_DIAGNOSTIC_ATTRIBUTE _Pragma(GCC diagnostic ignored "-Wattributes")
     #elif defined(_MSC_VER)
         #define STONKS_DIAGNOSTIC_ATTRIBUTE
     #else
-        #define STONKS_DIAGNOSTIC_ATTRIBUTE __pragma(clang diagnostic ignored "-Wattributes")
+        #define STONKS_DIAGNOSTIC_ATTRIBUTE _Pragma(clang diagnostic ignored "-Wattributes")
     #endif
 #endif
 

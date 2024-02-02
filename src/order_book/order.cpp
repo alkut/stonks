@@ -52,7 +52,7 @@ std::strong_ordering Order::operator<=>(const Order &other) const {
             return other.price <=> price;
     }
     STONKS_ASSERT(false, "unhandled order type");
-    return {};
+    return std::strong_ordering::less;
 }
 #endif
 
