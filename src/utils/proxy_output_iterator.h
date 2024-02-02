@@ -25,6 +25,8 @@
 
 #include "utils/proxy_output_iterator-fwd.h"
 
+STONKS_DIAGNOSTIC_PUSH
+
 namespace STONKS_NAMESPACE {
 
 template<typename OutputIterator, typename Transform, typename ProxyValue>
@@ -57,5 +59,8 @@ STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue>:
 }
 
 } // end namespace STONKS_NAMESPACE
+
+STONKS_DIAGNOSTIC_ATTRIBUTE
+STONKS_DIAGNOSTIC_POP
 
 #endif // #ifndef STONKS_UTILS_PROXY_OUTPUT_ITERATOR

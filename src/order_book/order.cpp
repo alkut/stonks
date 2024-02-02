@@ -43,7 +43,7 @@ bool Order::operator<(const Order &other) const {
 std::strong_ordering Order::operator<=>(const Order &other) const {
     if (type != other.type) {
         STONKS_ASSERT(false, "attempt to compare orders with different types - it's illegal");
-        return {};
+        return std::strong_ordering::less;
     }
     switch (type) {
         case Order::order_type::buy:

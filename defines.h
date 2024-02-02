@@ -58,4 +58,34 @@
     #endif
 #endif
 
+#ifndef STONKS_DIAGNOSTIC_PUSH
+    #ifdef __GNUC__
+        #define STONKS_DIAGNOSTIC_PUSH __pragma(gcc diagnostic push)
+    #elif defined(_MSC_VER)
+        #define STONKS_DIAGNOSTIC_PUSH __pragma(warning(push))
+    #else
+        #define STONKS_DIAGNOSTIC_PUSH __pragma(clang diagnostic push)
+    #endif
+#endif
+
+#ifndef STONKS_DIAGNOSTIC_POP
+    #ifdef __GNUC__
+        #define STONKS_DIAGNOSTIC_POP __pragma(GCC diagnostic pop)
+    #elif defined(_MSC_VER)
+        #define STONKS_DIAGNOSTIC_POP __pragma(warning(pop))
+    #else
+        #define STONKS_DIAGNOSTIC_POP __pragma(clang diagnostic pop)
+    #endif
+#endif
+
+#ifndef STONKS_DIAGNOSTIC_ATTRIBUTE
+    #ifdef __GNUC__
+        #define STONKS_DIAGNOSTIC_ATTRIBUTE __pragma(GCC diagnostic ignored "-Wattributes")
+    #elif defined(_MSC_VER)
+        #define STONKS_DIAGNOSTIC_ATTRIBUTE
+    #else
+        #define STONKS_DIAGNOSTIC_ATTRIBUTE __pragma(clang diagnostic ignored "-Wattributes")
+    #endif
+#endif
+
 #endif // #ifndef STONKS_DEFINE

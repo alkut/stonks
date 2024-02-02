@@ -26,6 +26,8 @@
 #include "storage/bestNStorage-fwd.h"
 #include <utility>
 
+STONKS_DIAGNOSTIC_PUSH
+
 namespace STONKS_NAMESPACE {
 
 template<typename Key, typename Value, typename Compare, typename Allocator>
@@ -86,5 +88,8 @@ STONKS_ALWAYS_INLINE typename BestNStorage<Key, Value, Compare, Allocator>::inse
 }
 
 } // end namespace STONKS_NAMESPACE
+
+STONKS_DIAGNOSTIC_ATTRIBUTE
+STONKS_DIAGNOSTIC_POP
 
 #endif // #ifndef STONKS_BEST_N_STORAGE_H
