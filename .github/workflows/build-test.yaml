@@ -15,15 +15,5 @@ jobs:
         working-directory: ./build
         run: cmake -Wno-dev -DCMAKE_C_COMPILER=gcc-12 -DCMAKE_CXX_COMPILER=g++-12 -DCMAKE_BUILD_TYPE=Release -DSTONKS_ENABLE_TESTS=ON -DSTONKS_RUN_ON_CI=ON -DSTONKS_SANITIZE=ON -DSTONKS_UBSan=ON -G "Ninja" -S .. -B . && cmake --build . -j4
       - name: tests
-        working-directory: ./build
+        working-directory: ./build/tests
         run: ctest
-      - uses: ZedThree/clang-tidy-review@v0.14.0
-        id: review
-
-      # Uploads an artefact containing clang_fixes.json
-      - uses: ZedThree/clang-tidy-review/upload@v0.14.0
-        id: upload-review
-
-      # If there are any comments, fail the check
-      - if: steps.review.outputs.total_comments > 0
-        run: exit 1

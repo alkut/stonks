@@ -16,6 +16,8 @@ if(NOT ${GTest_FOUND})
             ON
             CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
-    include(GoogleTest)
 
 endif()
+
+include(GoogleTest)
+
