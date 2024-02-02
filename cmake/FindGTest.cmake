@@ -1,4 +1,4 @@
-find_package(GTest 1.13 CONFIG)
+find_package(GTest 1.11 CONFIG)
 
 if(NOT ${GTest_FOUND})
 

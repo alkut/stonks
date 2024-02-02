@@ -25,6 +25,7 @@
 
 #include "utils/defines.h"
 #include <cstdint>
+#include <cstddef>
 
 #if __cplusplus >= 202002L
 #include <compare>
