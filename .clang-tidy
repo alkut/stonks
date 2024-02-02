@@ -1,0 +1,27 @@
+---
+Checks: "*,
+        -abseil-*,
+        -altera-*,
+        -android-*,
+        -fuchsia-*,
+        -google-*,
+        -llvm*,
+        -zircon-*,
+        cppcoreguidelines-non-private-member-variables-in-classes,
+        misc-non-private-member-variables-in-classes,
+        cppcoreguidelines-avoid-goto,
+        cppcoreguidelines-pro-type-const-cast,
+        modernize-use-nullptr,
+        modernize-use-trailing-return-type,
+        readability-else-after-return,
+        readability-static-accessed-through-instance,
+        readability-avoid-const-params-in-decls,
+        readability-braces-around-statements,
+        readability-container-size-empty,
+        readability-redundant-control-flow,
+        readability-simplify-boolean-expr,
+        readability-implicit-bool-conversion,
+"
+WarningsAsErrors: '*'
+HeaderFilterRegex: '\.h'
+FormatStyle:     none

@@ -1,4 +1,4 @@
-find_package(benchmark CONFIG REQUIRED)
+find_package(benchmark CONFIG)
 
 if (NOT ${benchmark_FOUND})
 

@@ -8,6 +8,11 @@ option(STONKS_ENABLE_TESTS
         OFF
 )
 
+option(STONKS_ENABLE_EXAMPLES
+        "build examples"
+        OFF
+)
+
 option(STONKS_ENABLE_BENCHMARKS
         "enable benchmark target"
         OFF
@@ -15,6 +20,11 @@ option(STONKS_ENABLE_BENCHMARKS
 
 option(STONKS_ENABLE_DOCS
         "enable doxygen docs"
+        OFF
+)
+
+option(STONKS_ENABLE_CCACHE
+        "enable Ccache"
         OFF
 )
 

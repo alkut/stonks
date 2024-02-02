@@ -48,4 +48,14 @@
     #endif
 #endif
 
+#ifndef STONKS_ALWAYS_INLINE
+    #ifdef __GNUC__
+        #define STONKS_ALWAYS_INLINE __attribute__((always_inline))
+    #elif defined(_MSC_VER)
+        #define STONKS_ALWAYS_INLINE __forceinline
+    #else
+        #define STONKS_ALWAYS_INLINE inline
+    #endif
+#endif
+
 #endif // #ifndef STONKS_DEFINE
