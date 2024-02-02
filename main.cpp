@@ -24,7 +24,8 @@
 #include <iostream>
 
 int main() {
-    static constexpr int countBuy = 3, countSell = 2;
+    static constexpr int countBuy = 3;
+    static constexpr int countSell = 2;
     STONKS_NAMESPACE::Book book(countBuy, countSell);
     STONKS_NAMESPACE::Order orders[countBuy + countSell];
     for (int i = 0; i < (countBuy + countSell) * 2; ++i) {
@@ -34,7 +35,7 @@ int main() {
     book.ChooseBest(orders, orders + countBuy);
     for (auto & order : orders) {
         std::cout <<  order.price << " " << order.amount <<  " " <<
-                (order.type == STONKS_NAMESPACE::Order::order_type::buy ? "buy" : "sell") << std::endl;
+                (order.type == STONKS_NAMESPACE::Order::order_type::buy ? "buy" : "sell") << '\n';
     }
     return 0;
 }
