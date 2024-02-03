@@ -24,6 +24,7 @@
 #define STONKS_BEST_N_STORAGE_H
 
 #include "storage/bestNStorage-fwd.h"
+#include <cstdlib>
 #include <utility>
 
 STONKS_DIAGNOSTIC_PUSH
