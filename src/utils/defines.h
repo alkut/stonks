@@ -30,7 +30,7 @@
 #ifdef _MSC_VER
 #define ALIGNED_MALLOC(size, alignment) _aligned_malloc(size, alignment)
 #else
-#define ALIGNED_MALLOC(size, alignment) aligned_alloc(size, alignment)
+#define ALIGNED_MALLOC(size, alignment) std::aligned_alloc(size, alignment)
 #endif
 
 #ifdef _MSC_VER
