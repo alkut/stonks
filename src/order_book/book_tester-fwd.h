@@ -30,9 +30,11 @@ namespace STONKS_NAMESPACE {
 
     struct Order;
 
-    template<typename T>
-    concept BookImpl = std::constructible_from<T, size_t, size_t> && requires(T book, Order order) {
+    template<typename TBookImplementation>
+    concept BookImpl = std::constructible_from<TBookImplementation, size_t, size_t> && requires(TBookImplementation book, Order order) {
         { book.AddOrder(order.price, order.amount, order.type) };
+        { book.ChooseBest(&order, &order).first } -> std::convertible_to<Order *>;
+        { book.ChooseBest(&order, &order).second } -> std::convertible_to<Order *>;
         { book.ChangeOrder(order.price, order.amount, order.type) } -> std::convertible_to<bool>;
         { book.AddOrder(order) };
         { book.ChangeOrder(order) } -> std::convertible_to<bool>;

@@ -27,7 +27,12 @@
 
 namespace STONKS_NAMESPACE {
 
-    template<typename OutputIterator, typename Transform, typename ProxyValue>
+    template<typename ProxyValue, typename OutputIterator, typename Transform>
+    concept ProxyValueFor = requires(ProxyValue value, OutputIterator iterator, Transform transform) {
+        { *iterator++ = transform(value) };
+    };
+
+    template<typename OutputIterator, typename Transform, ProxyValueFor<OutputIterator, Transform> ProxyValue>
     class STONKS_API OutputIteratorProxy {
     public:
         constexpr explicit OutputIteratorProxy(OutputIterator first, Transform transform = {});
