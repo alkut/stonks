@@ -1,5 +1,9 @@
 # stonks
 
+## homepage
+
+See [Homepage](https://alkut.github.io/stonks/)
+
 ## requirements
 
 - cmake 3.27+

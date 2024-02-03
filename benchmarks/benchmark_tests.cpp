@@ -79,25 +79,25 @@ struct RegisterBenchmarkHelper {};
 template<STONKS_NAMESPACE::BookImplementation... BookImplementations>
 struct RegisterBenchmarkHelper<std::tuple<BookImplementations...>> {
     static void RegisterBenchmarks() {
-        (benchmark::RegisterBenchmark(std::string{"ChooseBest/"} += details::GetName<BookImplementations>(),
+        (benchmark::RegisterBenchmark(std::string{"ChooseBest/"} + details::GetName<BookImplementations>(),
                                       ChooseBest<BookImplementations>)
                  ->RangeMultiplier(2)
                  ->Range(1 << 2, 1 << 10),
          ...);
 
-        (benchmark::RegisterBenchmark(std::string{"ChooseBestX10/"} += details::GetName<BookImplementations>(),
+        (benchmark::RegisterBenchmark(std::string{"ChooseBestX10/"} + details::GetName<BookImplementations>(),
                                       ChooseBestX10<BookImplementations>)
                  ->RangeMultiplier(2)
                  ->Range(1 << 2, 1 << 10),
          ...);
 
-        (benchmark::RegisterBenchmark(std::string{"ChangeOrder/"} += details::GetName<BookImplementations>(),
+        (benchmark::RegisterBenchmark(std::string{"ChangeOrder/"} + details::GetName<BookImplementations>(),
                                       ChangeOrder<BookImplementations>)
                  ->RangeMultiplier(2)
                  ->Range(1 << 2, 1 << 10),
          ...);
 
-        (benchmark::RegisterBenchmark(std::string{"AddEraseOrder/"} += details::GetName<BookImplementations>(),
+        (benchmark::RegisterBenchmark(std::string{"AddEraseOrder/"} + details::GetName<BookImplementations>(),
                                       AddEraseOrder<BookImplementations>)
                  ->RangeMultiplier(2)
                  ->Range(1 << 2, 1 << 10),
