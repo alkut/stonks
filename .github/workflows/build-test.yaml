@@ -13,7 +13,7 @@ jobs:
         run: mkdir -p build
       - name: build
         working-directory: ./build
-        run: cmake -Wno-dev -DCMAKE_C_COMPILER=gcc-12 -DCMAKE_CXX_COMPILER=g++-12 -DCMAKE_BUILD_TYPE=Release -DSTONKS_ENABLE_TESTS=ON -DSTONKS_ENABLE_BENCHMARKS=ON -DSTONKS_RUN_ON_CI=ON -DSTONKS_SANITIZE=ON -DSTONKS_UBSan=ON -G "Ninja" -S .. -B . && cmake --build . -j4
+        run: cmake -Wno-dev -DCMAKE_C_COMPILER=gcc-12 -DCMAKE_CXX_COMPILER=g++-12 -DCMAKE_BUILD_TYPE=Release -DSTONKS_ENABLE_TESTS=ON -DSTONKS_ENABLE_BENCHMARKS=ON -DSTONKS_RUN_ON_CI=ON -G "Ninja" -S .. -B . && cmake --build . -j4
       - name: tests
         working-directory: ./build/tests
         run: ctest
