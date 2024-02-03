@@ -3,6 +3,7 @@ project(stonks)
 
 include(cmake/Options.cmake)
 include(cmake/Environmnent.cmake)
+include(cmake/CxxFlags.cmake)
 
 set(CMAKE_CXX_STANDARD 20)
 

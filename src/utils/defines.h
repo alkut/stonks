@@ -27,4 +27,16 @@
 
 #define FIELD_TYPE(struct_name, field_name) decltype(std::declval<struct_name>().field_name)
 
+#ifdef _MSC_VER
+#define ALIGNED_MALLOC(size, alignment) _aligned_malloc(size, alignment)
+#else
+#define ALIGNED_MALLOC(size, alignment) aligned_alloc(size, alignment)
+#endif
+
+#ifdef _MSC_VER
+#define ALIGNED_FREE(size) _aligned_free(size)
+#else
+#define ALIGNED_FREE(size) aligned_free(size)
+#endif
+
 #endif// #ifndef STONKS_UTILS_DEFINES_H

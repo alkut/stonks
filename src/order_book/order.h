@@ -20,36 +20,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef STONKS_ORDER_H
-#define STONKS_ORDER_H
-
-#include "utils/defines.h"
-#include <cstddef>
-#include <cstdint>
-
-#if __cplusplus >= 202002L
-#include <compare>
-#endif
+#include "order_book/order-fwd.h"
+#include <random>
 
 namespace STONKS_NAMESPACE {
 
-    struct STONKS_API Order final {
-    public:
-        enum class order_type : uint8_t {
-            buy = 0,
-            sell = 1,
-        };
-        size_t price;
-        size_t amount;
-        order_type type;
+    constexpr bool Order::operator<(const Order &other) const {
+        if (type != other.type) {
+            STONKS_ASSERT(false, "attempt to compare orders with different types - it's illegal");
+            return false;
+        }
+        switch (type) {
+            case Order::order_type::buy:
+                return price < other.price;
+            case Order::order_type::sell:
+                return other.price < price;
+        }
+        STONKS_ASSERT(false, "unhandled order type");
+        return false;
+    }
 
-        bool operator<(const Order &other) const;
+    Order Order::GetRandom() {
+        static std::random_device randomDevice;
+        static std::default_random_engine randomEngine(randomDevice());
+        static auto distribution = std::uniform_int_distribution<size_t>(0, std::numeric_limits<size_t>::max());
+        return {
+                .price = distribution(randomEngine),
+                .amount = distribution(randomEngine),
+                .type = distribution(randomEngine) % 2 == 0 ? Order::order_type::buy : Order::order_type::sell,
+        };
+    }
 
 #if __cplusplus >= 202002L
-        std::strong_ordering operator<=>(const Order &other) const;
+    constexpr std::strong_ordering Order::operator<=>(const Order &other) const {
+        if (type != other.type) {
+            STONKS_ASSERT(false, "attempt to compare orders with different types - it's illegal");
+            return std::strong_ordering::less;
+        }
+        switch (type) {
+            case Order::order_type::buy:
+                return price <=> other.price;
+            case Order::order_type::sell:
+                return other.price <=> price;
+        }
+        STONKS_ASSERT(false, "unhandled order type");
+        return std::strong_ordering::less;
+    }
 #endif
-    };
 
 }// end namespace STONKS_NAMESPACE
-
-#endif// #ifndef STONKS_ORDER_H

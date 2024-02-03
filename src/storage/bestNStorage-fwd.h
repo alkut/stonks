@@ -53,17 +53,17 @@ namespace STONKS_NAMESPACE {
         using node_type = typename Super::node_type;
 #endif
 
-        explicit BestNStorage(size_t n);
+        constexpr explicit BestNStorage(size_t n);
         template<typename OutputIterator>
-        OutputIterator GetBest(OutputIterator first) const;
-        insert_return_type Insert(std::pair<const Key, Value> value);
+        constexpr OutputIterator GetBest(OutputIterator first) const;
+        constexpr insert_return_type Insert(std::pair<const Key, Value> value);
         template<typename UKey, typename UValue>
-        insert_return_type Emplace(UKey &&key, UValue &&value);
-        size_type Erase(const Key &key);
-        iterator Erase(iterator it);
-        insert_return_type Change(std::pair<const Key, Value> value);
+        constexpr insert_return_type Emplace(UKey &&key, UValue &&value);
+        constexpr size_type Erase(const Key &key);
+        constexpr iterator Erase(iterator it);
+        constexpr insert_return_type Change(std::pair<const Key, Value> value);
         template<typename UKey, typename UValue>
-        insert_return_type Change(UKey &&key, UValue &&value);
+        constexpr insert_return_type Change(UKey &&key, UValue &&value);
 
     private:
         std::map<Key, Value, Compare, Allocator> m_map;

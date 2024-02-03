@@ -30,12 +30,12 @@ namespace STONKS_NAMESPACE {
     template<typename OutputIterator, typename Transform, typename ProxyValue>
     class STONKS_API OutputIteratorProxy {
     public:
-        explicit OutputIteratorProxy(OutputIterator first, Transform transform = {});
-        OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++(int);
-        OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++();
-        OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator*();
-        OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator=(const ProxyValue &value);
-        operator OutputIterator() const;
+        constexpr explicit OutputIteratorProxy(OutputIterator first, Transform transform = {});
+        constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++(int);
+        constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++();
+        constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator*();
+        constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator=(const ProxyValue &value);
+        constexpr operator OutputIterator() const;
 
     private:
         OutputIterator m_iterator;
