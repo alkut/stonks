@@ -29,6 +29,9 @@
 #define STONKS_NAMESPACE stonks
 #endif
 
+/**
+ * Note: make sure, that for release configuration, STONKS_ASSERT is empty macro - some checks under asserts in library is heavy
+ */
 #ifndef STONKS_ASSERT
 #define STONKS_ASSERT(condition, formatted_message, ...) \
     do {                                                 \
@@ -36,6 +39,9 @@
     } while (false);
 #endif
 
+/**
+ * Note: there is no direct cmake support for dll on Windows, so examples, tests and benchmarks wouldn't work if dynamic lib chosen
+ */
 #ifndef STONKS_DYNAMIC_LIB
 #define STONKS_DYNAMIC_LIB false
 #endif
@@ -48,6 +54,10 @@
 #endif
 #endif
 
+/**
+ * Note: there is some issues, when function, marked as always_inline wasn't inlined.
+ * To ignore such warning see STONKS_DIAGNOSTIC_IGNORE_ATTRIBUTE
+ */
 #ifndef STONKS_ALWAYS_INLINE
 #ifdef __GNUC__
 #define STONKS_ALWAYS_INLINE __attribute__((always_inline))
@@ -86,16 +96,19 @@
 #endif
 #endif
 
-#ifndef STONKS_DIAGNOSTIC_ATTRIBUTE
+#ifndef STONKS_DIAGNOSTIC_IGNORE_ATTRIBUTE
 #ifdef __GNUC__
-#define STONKS_DIAGNOSTIC_ATTRIBUTE STONKS_DO_PRAGMA(GCC diagnostic ignored "-Wattributes")
+#define STONKS_DIAGNOSTIC_IGNORE_ATTRIBUTE STONKS_DO_PRAGMA(GCC diagnostic ignored "-Wattributes")
 #elif defined(_MSC_VER)
-#define STONKS_DIAGNOSTIC_ATTRIBUTE
+#define STONKS_DIAGNOSTIC_IGNORE_ATTRIBUTE
 #else
 #define STONKS_DIAGNOSTIC_ATTRIBUTE STONKS_DO_PRAGMA(clang diagnostic ignored "-Wattributes")
 #endif
 #endif
 
+/**
+ * Note: Some structures use something like Small String Optimization
+ */
 #ifndef STONKS_MAX_SSO_BUFFER_SIZE
 #define STONKS_MAX_SSO_BUFFER_SIZE 1024
 #endif

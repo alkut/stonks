@@ -32,14 +32,47 @@ namespace STONKS_NAMESPACE {
         { *iterator++ = transform(value) };
     };
 
+    /**
+     * Class Transform one output iterator to another.
+     * When user write to proxy iterator, it applies transform function and write result to obtained iterator.
+     * So proxy iterator has interface of output iterator for proxy value type
+     * @tparam OutputIterator iterator you would like to transform
+     * @tparam Transform transform function
+     * @tparam ProxyValue value to read
+     */
     template<typename OutputIterator, typename Transform, ProxyValueFor<OutputIterator, Transform> ProxyValue>
     class STONKS_API OutputIteratorProxy {
     public:
+        /**
+         * Obtain iterator to write to
+         * @param first iterator to the begin
+         * @param transform transform function
+         */
         constexpr explicit OutputIteratorProxy(OutputIterator first, Transform transform = {});
+        /**
+         * does nothing, required only the consistency of interface
+         * @return reference to itself
+         */
         constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++(int);
+        /**
+         * does nothing, required only the consistency of interface
+         * @return reference to itself
+         */
         constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator++();
+        /**
+         * does nothing, required only the consistency of interface
+         * @return reference to itself
+         */
         constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator*();
+        /**
+         * transform value and write result
+         * @return reference to itself
+         */
         constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator=(const ProxyValue &value);
+        /**
+         * implicit cast to obtained iterator
+         * @return iterator to following of last written position
+         */
         constexpr operator OutputIterator() const;
 
     private:

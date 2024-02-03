@@ -40,6 +40,13 @@ namespace STONKS_NAMESPACE {
     template<typename Key, typename Value, typename Compare, typename Allocator, size_t maxSSOBufferSize>
     class BestNStorageBuffered;
 
+    /**
+     * Generic class similar to std::map. Allows get lowest N element
+     * @tparam Key must be copy-assignable
+     * @tparam Value must be copy-assignable
+     * @tparam Compare defines compare of two keys. must produce strong order
+     * @tparam Allocator allocator for std::pair<const Key, Value>
+     */
     template<typename Key, typename Value, typename Compare, typename Allocator>
     class STONKS_API BestNStorage final {
     public:
@@ -65,15 +72,61 @@ namespace STONKS_NAMESPACE {
         using node_type = typename Super::node_type;
 #endif
 
+        /**
+         *
+         * @param n GetBest will return n lowest elements
+         */
         constexpr explicit BestNStorage(size_t n);
+        /**
+         * Get n lowest by key pair and write it via first output iterator
+         * @tparam OutputIterator output iterator fow writing lowest pairs. @see KeyValueOutputIterator concept
+         * @param first output iterator fow writing lowest pairs
+         * @return iterator right after last written element
+         */
         template<KeyValueOutputIterator<Key, Value> OutputIterator>
         constexpr OutputIterator GetBest(OutputIterator first) const;
+        /**
+         * If there is pair with equal key, values would be added up
+         * @param value key-value pair
+         * @return pair of iterator of inserted element and flag if pair was added
+         */
         constexpr insert_return_type Insert(std::pair<const Key, Value> value);
+        /**
+         * If there is pair with equal key, values would be added up
+         * @tparam UKey Universal reference to the key
+         * @tparam UValue Universal reference to the value
+         * @param key Universal reference to the key
+         * @param value Universal reference to the value
+         * @return pair of iterator of inserted element and flag if pair was added
+         */
         template<typename UKey, typename UValue>
         constexpr insert_return_type Emplace(UKey &&key, UValue &&value);
+        /**
+         * Remove key-value pair if exists pair with following key
+         * @param key key to remove
+         * @return 0 if there is no pair with following key. 1 otherwise
+         */
         constexpr size_type Erase(const Key &key);
+        /**
+         * Remove key-value pair by iterator. if iterator == end(), do nothing
+         * @param it iterator to remove
+         * @return iterator following removed element
+         */
         constexpr iterator Erase(iterator it);
+        /**
+         * If there is pair with equal key, values would be overwritten. Otherwise, pair would be inserted
+         * @param value key-value pair
+         * @return pair of iterator of inserted element and flag if pair was added
+         */
         constexpr insert_return_type Change(std::pair<const Key, Value> value);
+        /**
+         * If there is pair with equal key, values would be overwritten. Otherwise, pair would be inserted
+         * @tparam UKey Universal reference to the key
+         * @tparam UValue Universal reference to the value
+         * @param key Universal reference to the key
+         * @param value Universal reference to the value
+         * @return pair of iterator of inserted element and flag if pair was added
+         */
         template<typename UKey, typename UValue>
         constexpr insert_return_type Change(UKey &&key, UValue &&value);
 
@@ -110,15 +163,56 @@ namespace STONKS_NAMESPACE {
         using node_type = typename Super::node_type;
 #endif
 
+        /**
+         *
+         * @param n GetBest will return n lowest elements
+         */
         constexpr explicit BestNStorageBuffered(size_t n);
         constexpr ~BestNStorageBuffered() noexcept;
+        /**
+         * Get n lowest by key pair and write it via first output iterator
+         * @tparam OutputIterator output iterator fow writing lowest pairs. @see KeyValueOutputIterator concept
+         * @param first output iterator fow writing lowest pairs
+         * @return iterator right after last written element
+         */
         template<typename OutputIterator>
         constexpr OutputIterator GetBest(OutputIterator first) const;
+        /**
+         * If there is pair with equal key, values would be added up
+         * @param value key-value pair
+         * @return pair of iterator of inserted element and flag if pair was added
+         */
         constexpr insert_return_type Insert(std::pair<const Key, Value> value);
+        /**
+         * If there is pair with equal key, values would be added up
+         * @tparam UKey Universal reference to the key
+         * @tparam UValue Universal reference to the value
+         * @param key Universal reference to the key
+         * @param value Universal reference to the value
+         * @return pair of iterator of inserted element and flag if pair was added
+         */
         template<typename UKey, typename UValue>
         constexpr insert_return_type Emplace(UKey &&key, UValue &&value);
+        /**
+         * Remove key-value pair if exists pair with following key
+         * @param key key to remove
+         * @return 0 if there is no pair with following key. 1 otherwise
+         */
         constexpr size_type Erase(const Key &key);
+        /**
+         * If there is pair with equal key, values would be overwritten. Otherwise, pair would be inserted
+         * @param value key-value pair
+         * @return pair of iterator of inserted element and flag if pair was added
+         */
         constexpr insert_return_type Change(std::pair<const Key, Value> value);
+        /**
+         * If there is pair with equal key, values would be overwritten. Otherwise, pair would be inserted
+         * @tparam UKey Universal reference to the key
+         * @tparam UValue Universal reference to the value
+         * @param key Universal reference to the key
+         * @param value Universal reference to the value
+         * @return pair of iterator of inserted element and flag if pair was added
+         */
         template<typename UKey, typename UValue>
         constexpr insert_return_type Change(UKey &&key, UValue &&value);
 

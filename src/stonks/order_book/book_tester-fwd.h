@@ -31,7 +31,7 @@ namespace STONKS_NAMESPACE {
     struct Order;
 
     template<typename TBookImplementation>
-    concept BookImpl = std::constructible_from<TBookImplementation, size_t, size_t> && requires(TBookImplementation book, Order order) {
+    concept BookImplementation = std::constructible_from<TBookImplementation, size_t, size_t> && requires(TBookImplementation book, Order order) {
         { book.AddOrder(order.price, order.amount, order.type) };
         { book.ChooseBest(&order, &order).first } -> std::convertible_to<Order *>;
         { book.ChooseBest(&order, &order).second } -> std::convertible_to<Order *>;
@@ -41,18 +41,48 @@ namespace STONKS_NAMESPACE {
         { book.EraseOrder(order.price, order.type) };
     };
 
-    template<BookImpl BookImplementation>
+    /**
+     * Class for unit test and benchmark of different OrderBook implementation
+     * @tparam BookImplementation OrderBook implementation @see BookImplementation concept
+     */
+    template<BookImplementation BookImplementation>
     class STONKS_API BookTester final {
     public:
+        /**
+         *
+         * @param numOrders book order initial capacity
+         * @param buyBestCount choose buyBestCount best buy orders
+         * @param sellBestCount choose sellBestCount best sell orders
+         */
         explicit BookTester(size_t numOrders, size_t buyBestCount = 5, size_t sellBestCount = 5);
         ~BookTester() noexcept;
 
+        /**
+         * invoke ChooseBest method with minimal overhead
+         */
         void BenchmarkChooseBest();
+        /**
+         * invoke ChangeOrder method with minimal overhead
+         */
         void BenchmarkChangeOrder();
+        /**
+         * invoke AddOrder then EraseOrder of the same order with minimal overhead
+         */
         void BenchmarkAddErase();
-
+        /**
+         * unit test for EraseOrder. Book must handle case erase order, that doesn't exist correctly
+         * @return false on any failure
+         */
         static bool TestEraseNonExistingOrder();
+        /**
+         * unit test for Choose. Book must handle case when count of orders less then buyBestCount correctly
+         * @return false on any failure
+         */
         static bool TestChooseBestSmallBook();
+        /**
+         * unit test for ChangeOrder. Book must handle case change order, that doesn't exist correctly
+         * @return false on any failure
+         */
         static bool TestChangeNonExistingOrder();
 
     private:

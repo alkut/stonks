@@ -14,7 +14,7 @@ option(STONKS_ENABLE_DYNAMIC_LIBS "use dynamic libs instead of static" OFF)
 
 option(STONKS_RUN_ON_CI "used for ci/cd" OFF)
 
-option(STONKS_BINARY_IN_BUILD "store build artifact inside temp folder" ON)
+option(STONKS_BINARY_IN_BUILD "store build artifact inside temp folder" OFF)
 
 option(STONKS_SANITIZE "memory sanitizer" OFF)
 

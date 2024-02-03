@@ -28,7 +28,7 @@
 
 namespace STONKS_NAMESPACE {
 
-    template<BookImpl BookImplementation>
+    template<BookImplementation BookImplementation>
     BookTester<BookImplementation>::BookTester(size_t numOrders, size_t buyBestCount, size_t sellBestCount)
         : m_book(buyBestCount, sellBestCount) {
         for (size_t i = 0; i < numOrders; ++i) {
@@ -38,29 +38,29 @@ namespace STONKS_NAMESPACE {
         m_bufferSell = static_cast<Order *>(ALIGNED_MALLOC(sellBestCount * sizeof(Order), alignof(Order)));
     }
 
-    template<BookImpl BookImplementation>
+    template<BookImplementation BookImplementation>
     BookTester<BookImplementation>::~BookTester() noexcept {
         ALIGNED_FREE(m_bufferBuy);
         ALIGNED_FREE(m_bufferSell);
     }
 
-    template<BookImpl BookImplementation>
+    template<BookImplementation BookImplementation>
     void BookTester<BookImplementation>::BenchmarkChooseBest() {
         m_book.ChooseBest(m_bufferBuy, m_bufferSell);
     }
 
-    template<BookImpl BookImplementation>
+    template<BookImplementation BookImplementation>
     void BookTester<BookImplementation>::BenchmarkChangeOrder() {
         m_book.ChangeOrder(kOrder);
     }
 
-    template<BookImpl BookImplementation>
+    template<BookImplementation BookImplementation>
     void BookTester<BookImplementation>::BenchmarkAddErase() {
         m_book.AddOrder(kOrder);
         m_book.EraseOrder(kOrder.price, kOrder.type);
     }
 
-    template<BookImpl BookImplementation>
+    template<BookImplementation BookImplementation>
     bool BookTester<BookImplementation>::TestEraseNonExistingOrder() {
         {
             BookImplementation book(5, 5);
@@ -77,7 +77,7 @@ namespace STONKS_NAMESPACE {
         return true;
     }
 
-    template<BookImpl BookImplementation>
+    template<BookImplementation BookImplementation>
     bool BookTester<BookImplementation>::TestChooseBestSmallBook() {
         {
             BookImplementation book(5, 5);
@@ -111,7 +111,7 @@ namespace STONKS_NAMESPACE {
         return true;
     }
 
-    template<BookImpl BookImplementation>
+    template<BookImplementation BookImplementation>
     bool BookTester<BookImplementation>::TestChangeNonExistingOrder() {
         {
             BookImplementation book(5, 5);

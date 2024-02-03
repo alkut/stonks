@@ -33,14 +33,29 @@
 
 namespace STONKS_NAMESPACE {
 
+    /**
+     * Data Class for storing order properties
+     */
     struct STONKS_API Order final {
     public:
+        /**
+         * order type - buy or sell
+         */
         enum class order_type : uint8_t {
             buy = 0,
             sell = 1,
         };
+        /**
+         * price of order
+         */
         size_t price;
+        /**
+         * amount of order
+         */
         size_t amount;
+        /**
+         * type of order - buy or sell
+         */
         order_type type;
 
         constexpr bool operator<(const Order &other) const;
@@ -56,6 +71,9 @@ namespace STONKS_NAMESPACE {
         static Order GetRandom();
 
 #if __cplusplus >= 202002L
+        /**
+         * three-way comparasion operator. If order type is buy - best would be order with lowest price. Otherwise, with greatest price
+         */
         constexpr std::strong_ordering operator<=>(const Order &other) const;
 #endif
     };

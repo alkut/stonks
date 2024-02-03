@@ -3,7 +3,7 @@ project(example)
 
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(Stonks REQUIRED)
+find_package(Stonks 1.0.0 REQUIRED)
 
 add_executable(example example.cpp)
 

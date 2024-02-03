@@ -4,7 +4,7 @@
 
 namespace {
 
-    template<STONKS_NAMESPACE::BookImpl BookImplementation>
+    template<STONKS_NAMESPACE::BookImplementation BookImplementation>
     void ChooseBest(benchmark::State &state) {
         static constexpr int countBuy = 5, countSell = 5;
         size_t countOrders = state.range(0);
@@ -15,7 +15,7 @@ namespace {
         }
     }
 
-    template<STONKS_NAMESPACE::BookImpl BookImplementation>
+    template<STONKS_NAMESPACE::BookImplementation BookImplementation>
     void ChooseBestX10(benchmark::State &state) {
         static constexpr int countBuy = 50, countSell = 50;
         size_t countOrders = state.range(0);
@@ -26,7 +26,7 @@ namespace {
         }
     }
 
-    template<STONKS_NAMESPACE::BookImpl BookImplementation>
+    template<STONKS_NAMESPACE::BookImplementation BookImplementation>
     void ChangeOrder(benchmark::State &state) {
         static constexpr int countBuy = 5, countSell = 5;
         size_t countOrders = state.range(0);
@@ -37,7 +37,7 @@ namespace {
         }
     }
 
-    template<STONKS_NAMESPACE::BookImpl BookImplementation>
+    template<STONKS_NAMESPACE::BookImplementation BookImplementation>
     void AddEraseOrder(benchmark::State &state) {
         static constexpr int countBuy = 5, countSell = 5;
         size_t countOrders = state.range(0);
@@ -51,7 +51,12 @@ namespace {
 }// namespace
 
 namespace details {
-    template<STONKS_NAMESPACE::BookImpl BookImplementation>
+    /**
+     * Don't forget register all book implementation -> benchmark name mapping
+     * @tparam BookImplementation
+     * @return string literal, name of benchmark parametrized by following template parameter
+     */
+    template<STONKS_NAMESPACE::BookImplementation BookImplementation>
     consteval const char *GetName();
 
     template<>
@@ -65,10 +70,13 @@ namespace details {
     }
 }// namespace details
 
+/**
+ * Helper to register all benchmarks
+ */
 template<typename T>
 struct RegisterBenchmarkHelper {};
 
-template<STONKS_NAMESPACE::BookImpl... BookImplementations>
+template<STONKS_NAMESPACE::BookImplementation... BookImplementations>
 struct RegisterBenchmarkHelper<std::tuple<BookImplementations...>> {
     static void RegisterBenchmarks() {
         (benchmark::RegisterBenchmark(std::string{"ChooseBest/"} += details::GetName<BookImplementations>(),
@@ -97,6 +105,9 @@ struct RegisterBenchmarkHelper<std::tuple<BookImplementations...>> {
     }
 };
 
+/**
+ * define here all implementations to benchmark
+ */
 using BookImplementations = std::tuple<STONKS_NAMESPACE::BaseBook, STONKS_NAMESPACE::BufferedBook>;
 
 bool _ = []() {

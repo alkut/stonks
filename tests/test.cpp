@@ -2,6 +2,9 @@
 #include "stonks/order_book/book_tester.h"
 #include <gtest/gtest.h>
 
+/**
+ * define here all implementations to test
+ */
 using BookImplementationsTesters = ::testing::Types<STONKS_NAMESPACE::BookTester<STONKS_NAMESPACE::BaseBook>,
                                                     STONKS_NAMESPACE::BookTester<STONKS_NAMESPACE::BufferedBook>>;
 
