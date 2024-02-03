@@ -109,12 +109,9 @@ namespace STONKS_NAMESPACE {
     template<typename Key, typename Value, typename Compare, typename Allocator, size_t maxSSOBufferSize>
     template<typename OutputIterator>
     constexpr STONKS_ALWAYS_INLINE OutputIterator BestNStorageBuffered<Key, Value, Compare, Allocator, maxSSOBufferSize>::GetBest(OutputIterator first) const {
-        size_t resultSize = 0;
-        for (auto *it = m_bufferBest;; ++it) {
-            if (resultSize++ == m_baseStorage.m_n) {
-                return first;
-            }
-            *first++ = *it;
+        const size_t resultSize = std::min(m_bufferSize, m_baseStorage.m_n);
+        for (size_t i = 0; i < resultSize; ++i) {
+            *first++ = m_bufferBest[i];
         }
         return first;
     }

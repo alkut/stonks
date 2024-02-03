@@ -32,7 +32,7 @@ See [Homepage](https://alkut.github.io/stonks/)
 `cmake --build ./build -j {nproc}` <br>
 `cmake --install` <br>
 
-Once library install on the host machine, it is available by `find_package(Stonks)`.
+Once library installed on the host machine, it is available by `find_package(Stonks)`.
 That command propagate following cmake vars:
 
 - Stonks_VERSION - version of library
