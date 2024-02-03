@@ -4,7 +4,8 @@ project(
         order_book_lib
         LANGUAGES CXX
         DESCRIPTION "main lib for whole project"
-        VERSION 1.0.0)
+        VERSION 1.0.1
+        HOMEPAGE_URL https://alkut.github.io/stonks/)
 
 set(order_book_lib_headers
         stonks/order_book/book-fwd.h
