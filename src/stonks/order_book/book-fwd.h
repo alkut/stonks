@@ -23,9 +23,9 @@
 #ifndef STONKS_BOOK_FWD_H
 #define STONKS_BOOK_FWD_H
 
-#include "order_book/order-fwd.h"
-#include "storage/bestNStorage.h"
-#include "utils/proxy_output_iterator.h"
+#include "stonks/order_book/order-fwd.h"
+#include "stonks/storage/bestNStorage.h"
+#include "stonks/utils/proxy_output_iterator.h"
 #include <concepts>
 
 namespace STONKS_NAMESPACE {

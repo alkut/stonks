@@ -17,8 +17,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "order_book/book-fwd.h"
-#include "order_book/order.h"
+#include "book-fwd.h"
+#include "order.h"
 
 #ifndef STONKS_BOOK_H
 #define STONKS_BOOK_H

@@ -23,7 +23,7 @@
 #ifndef STONKS_BOOK_TESTER_FWD_H
 #define STONKS_BOOK_TESTER_FWD_H
 
-#include "utils/defines.h"
+#include "stonks/utils/defines.h"
 #include <concepts>
 
 namespace STONKS_NAMESPACE {

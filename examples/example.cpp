@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "stonks/order_book/book.h"
 #include <iostream>
+#include <stonks/order_book/book.h>
 
 int main() {
     static constexpr int countBuy = 3;

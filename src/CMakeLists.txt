@@ -1,45 +1,49 @@
 include(GNUInstallDirs)
 
 project(
-  order_book_lib
-  LANGUAGES CXX
-  DESCRIPTION "main lib for whole project")
+        order_book_lib
+        LANGUAGES CXX
+        DESCRIPTION "main lib for whole project"
+        VERSION 1.0.0)
 
 set(order_book_lib_headers
-    order_book/book-fwd.h
-    order_book/order-fwd.h
-    order_book/book_tester-fwd.h
-    order_book/book_tester.h
-    order_book/book.h
-    order_book/order.h
-    storage/bestNStorage.h
-    storage/bestNStorage-fwd.h
-    utils/proxy_output_iterator-fwd.h
-    utils/proxy_output_iterator.h)
+        stonks/order_book/book-fwd.h
+        stonks/order_book/order-fwd.h
+        stonks/order_book/book_tester-fwd.h
+        stonks/order_book/book_tester.h
+        stonks/order_book/book.h
+        stonks/order_book/order.h
+        stonks/storage/bestNStorage.h
+        stonks/storage/bestNStorage-fwd.h
+        stonks/utils/proxy_output_iterator-fwd.h
+        stonks/utils/proxy_output_iterator.h)
 
-set(order_book_lib_sources order_book/tmp.cpp)
+set(order_book_lib_headers___order_book
+        stonks/order_book/book-fwd.h
+        stonks/order_book/order-fwd.h
+        stonks/order_book/book_tester-fwd.h
+        stonks/order_book/book_tester.h
+        stonks/order_book/book.h
+        stonks/order_book/order.h
+)
 
-add_library(order_book_lib STATIC ${order_book_lib_headers} ${order_book_lib_sources})
+set(order_book_lib_headers___storage
+        stonks/storage/bestNStorage.h
+        stonks/storage/bestNStorage-fwd.h
+)
 
-add_library(stonks::order_book ALIAS order_book_lib)
+set(order_book_lib_headers___utils
+        stonks/utils/proxy_output_iterator-fwd.h
+        stonks/utils/proxy_output_iterator.h
+        stonks/utils/defines.h
+)
 
-target_include_directories(order_book_lib PRIVATE ${PROJECT_SOURCE_DIR})
+add_library(order_book_lib_headers INTERFACE ${order_book_lib_headers})
 
-if(${STONKS_ENABLE_DYNAMIC_LIBS})
-  target_compile_definitions(order_book_lib PRIVATE STONKS_DYNAMIC_LIB)
-endif()
+if (${STONKS_ENABLE_DYNAMIC_LIBS})
+    target_compile_definitions(order_book_lib PRIVATE STONKS_DYNAMIC_LIB)
+endif ()
 
-if(${STONKS_ENABLE_INSTALL})
-  install(
-    TARGETS order_book_lib
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    INCLUDES
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
-  install(
-    DIRECTORY "${PROJECT_SOURCE_DIR}/include/stonks"
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    FILES ${order_book_lib_headers})
-endif()
+if (${STONKS_ENABLE_INSTALL})
+    include(../cmake/ConfigureInstallation.cmake)
+endif ()

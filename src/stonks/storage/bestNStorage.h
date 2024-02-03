@@ -23,7 +23,7 @@
 #ifndef STONKS_BEST_N_STORAGE_H
 #define STONKS_BEST_N_STORAGE_H
 
-#include "storage/bestNStorage-fwd.h"
+#include "bestNStorage-fwd.h"
 #include <cstdlib>
 #include <utility>
 
@@ -127,7 +127,7 @@ namespace STONKS_NAMESPACE {
     template<typename UKey, typename UValue>
     constexpr STONKS_ALWAYS_INLINE typename BestNStorageBuffered<Key, Value, Compare, Allocator, maxSSOBufferSize>::insert_return_type BestNStorageBuffered<Key, Value, Compare, Allocator, maxSSOBufferSize>::Emplace(UKey &&key, UValue &&value) {
         if (m_bufferSize == 0) {
-            new (m_bufferBest) std::pair<const Key, Value>{key, value};
+            new (m_bufferBest) std::pair<Key, Value>{key, value};
             STONKS_ASSERT(m_bufferSize < m_baseStorage.m_n, "before increasing");
             ++m_bufferSize;
             return m_baseStorage.Emplace(std::forward<UKey>(key), std::forward<UValue>(value));
@@ -140,9 +140,9 @@ namespace STONKS_NAMESPACE {
                 }
                 if (m_baseStorage.m_map.key_comp()(key, m_bufferBest[m_bufferSize - 1].first)) {
                     for (size_t j = m_bufferSize - 1; j > i; --j) {
-                        m_bufferBest[j] = m_bufferBest[j - 1];
+                        m_bufferBest[j] = std::move_if_noexcept(m_bufferBest[j - 1]);
                     }
-                    new (m_bufferBest + i) std::pair<const Key, Value>{key, value};
+                    new (m_bufferBest + i) std::pair<Key, Value>{key, value};
                     m_bufferSize += m_bufferSize < m_baseStorage.m_n;
                     STONKS_ASSERT(m_bufferSize <= m_baseStorage.m_n, "after increasing");
                     return m_baseStorage.Emplace(std::forward<UKey>(key), std::forward<UValue>(value));
@@ -152,7 +152,7 @@ namespace STONKS_NAMESPACE {
         }
         if (m_bufferSize < m_baseStorage.m_n) {
             STONKS_ASSERT(m_bufferSize < m_baseStorage.m_n, "before increasing");
-            new (m_bufferBest + m_bufferSize++) std::pair<const Key, Value>{key, value};
+            new (m_bufferBest + m_bufferSize++) std::pair<Key, Value>{key, value};
             return m_baseStorage.Emplace(std::forward<UKey>(key), std::forward<UValue>(value));
         }
         return m_baseStorage.Emplace(std::forward<UKey>(key), std::forward<UValue>(value));
@@ -175,7 +175,7 @@ namespace STONKS_NAMESPACE {
                     --m_bufferSize;
                     if (m_baseStorage.m_map.size() > m_baseStorage.m_n) {
                         STONKS_ASSERT(m_bufferSize < m_baseStorage.m_n, "before increasing");
-                        new (m_bufferBest + m_bufferSize++) std::pair<const Key, Value>{*m_baseStorage.m_map.upper_bound(greatest)};
+                        new (m_bufferBest + m_bufferSize++) std::pair<Key, Value>{*m_baseStorage.m_map.upper_bound(greatest)};
                     }
                     return m_baseStorage.Erase(key);
                 }

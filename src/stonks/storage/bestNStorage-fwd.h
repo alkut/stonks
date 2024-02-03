@@ -23,7 +23,7 @@
 #ifndef STONKS_BEST_N_STORAGE_FWD_H
 #define STONKS_BEST_N_STORAGE_FWD_H
 
-#include "utils/defines.h"
+#include "stonks/utils/defines.h"
 #include <concepts>
 #include <map>
 
@@ -41,7 +41,7 @@ namespace STONKS_NAMESPACE {
     class BestNStorageBuffered;
 
     template<typename Key, typename Value, typename Compare, typename Allocator>
-    class STONKS_API BestNStorage {
+    class STONKS_API BestNStorage final {
     public:
         using Super = std::map<Key, Value, Compare, Allocator>;
         using key_type = typename Super::key_type;

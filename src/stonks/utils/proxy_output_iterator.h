@@ -23,7 +23,7 @@
 #ifndef STONKS_UTILS_PROXY_OUTPUT_ITERATOR
 #define STONKS_UTILS_PROXY_OUTPUT_ITERATOR
 
-#include "utils/proxy_output_iterator-fwd.h"
+#include "proxy_output_iterator-fwd.h"
 
 STONKS_DIAGNOSTIC_PUSH
 

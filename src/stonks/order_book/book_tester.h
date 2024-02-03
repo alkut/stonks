@@ -23,7 +23,7 @@
 #ifndef STONKS_BOOK_TESTER_H
 #define STONKS_BOOK_TESTER_H
 
-#include "order_book/book_tester-fwd.h"
+#include "book_tester-fwd.h"
 #include <cstdlib>
 
 namespace STONKS_NAMESPACE {

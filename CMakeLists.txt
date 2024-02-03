@@ -13,7 +13,11 @@ if (${STONKS_ENABLE_TESTS})
     add_subdirectory(tests)
 endif ()
 
-if (${STONKS_ENABLE_BENCHMARKS})
+if (${STONKS_ENABLE_EXAMPLES})
+    add_subdirectory(examples)
+endif ()
+
+if (${STONKS_ENABLE_BENCHMARKS} AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_subdirectory(benchmarks)
 endif ()
 
@@ -27,8 +31,7 @@ endif ()
 
 add_executable(stonks main.cpp)
 
-target_include_directories(stonks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(stonks PRIVATE order_book_lib)
+target_include_directories(stonks PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 if (NOT ${STONKS_BINARY_IN_BUILD})
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)

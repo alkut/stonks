@@ -23,7 +23,7 @@
 #ifndef STONKS_UTILS_PROXY_OUTPUT_ITERATOR_FWD
 #define STONKS_UTILS_PROXY_OUTPUT_ITERATOR_FWD
 
-#include "utils/defines.h"
+#include "stonks/utils/defines.h"
 
 namespace STONKS_NAMESPACE {
 

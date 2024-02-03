@@ -23,7 +23,7 @@
 #ifndef STONKS_UTILS_DEFINES_H
 #define STONKS_UTILS_DEFINES_H
 
-#include "../defines.h"
+#include "stonks/../defines.h"
 
 #define FIELD_TYPE(struct_name, field_name) decltype(std::declval<struct_name>().field_name)
 
