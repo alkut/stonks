@@ -30,13 +30,13 @@
 #ifdef _MSC_VER
 #define ALIGNED_MALLOC(size, alignment) _aligned_malloc(size, alignment)
 #else
-#define ALIGNED_MALLOC(size, alignment) std::aligned_alloc(size, alignment)
+#define ALIGNED_MALLOC(size, alignment) malloc(size)
 #endif
 
 #ifdef _MSC_VER
-#define ALIGNED_FREE(size) _aligned_free(size)
+#define ALIGNED_FREE(ptr) _aligned_free(ptr)
 #else
-#define ALIGNED_FREE(size) free(size)
+#define ALIGNED_FREE(ptr) free(ptr)
 #endif
 
 #endif// #ifndef STONKS_UTILS_DEFINES_H
