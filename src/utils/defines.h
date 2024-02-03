@@ -36,7 +36,7 @@
 #ifdef _MSC_VER
 #define ALIGNED_FREE(size) _aligned_free(size)
 #else
-#define ALIGNED_FREE(size) aligned_free(size)
+#define ALIGNED_FREE(size) free(size)
 #endif
 
 #endif// #ifndef STONKS_UTILS_DEFINES_H
