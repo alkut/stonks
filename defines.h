@@ -96,4 +96,8 @@
 #endif
 #endif
 
+#ifndef STONKS_MAX_SSO_BUFFER_SIZE
+#define STONKS_MAX_SSO_BUFFER_SIZE 1024
+#endif
+
 #endif// #ifndef STONKS_DEFINE

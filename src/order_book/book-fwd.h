@@ -26,71 +26,43 @@
 #include "order_book/order-fwd.h"
 #include "storage/bestNStorage.h"
 #include "utils/proxy_output_iterator.h"
+#include <concepts>
 
 namespace STONKS_NAMESPACE {
 
-    // I hope, that would be inlined
-    inline constexpr auto bestBuy = [](const FIELD_TYPE(Order, price) & lhs, const FIELD_TYPE(Order, price) & rhs) -> bool {
-        return lhs < rhs;
+    using price_type = FIELD_TYPE(Order, price);
+    using amount_type = FIELD_TYPE(Order, amount);
+    using price_amount_type = std::pair<const price_type, amount_type>;
+
+    template<typename TStorage>
+    concept ChooseBestStorage = std::constructible_from<TStorage, size_t> && requires(TStorage storage, price_type price, amount_type amount, price_amount_type pair) {
+        { storage.GetBest((std::pair<price_type, amount_type> *) (nullptr)) } -> std::convertible_to<std::pair<price_type, amount_type> *>;
+        { storage.Insert(pair).second } -> std::convertible_to<bool>;
+        { storage.Emplace(price, amount).second } -> std::convertible_to<bool>;
+        { storage.Erase(price) } -> std::convertible_to<size_t>;
+        { storage.Change(pair).second } -> std::convertible_to<bool>;
+        { storage.Change(price, amount).second } -> std::convertible_to<bool>;
     };
 
-    // I hope, that would be inlined
-    inline constexpr auto bestSell = [](const FIELD_TYPE(Order, price) & lhs, const FIELD_TYPE(Order, price) & rhs) -> bool {
-        return lhs > rhs;
-    };
+    template<typename TOutputIterator>
+    concept OrderOutputIterator = std::output_iterator<TOutputIterator, Order>;
 
+    template<ChooseBestStorage TStorageBuy, ChooseBestStorage TStorageSell>
     class STONKS_API Book {
     public:
-        using price_type = FIELD_TYPE(Order, price);
-        using amount_type = FIELD_TYPE(Order, amount);
-
         constexpr Book(size_t buyBestCount, size_t sellBestCount);
         constexpr void AddOrder(price_type price, amount_type amount, Order::order_type type);
         constexpr bool ChangeOrder(price_type price, amount_type newAmount, Order::order_type type);
         constexpr void AddOrder(const Order &order);
         constexpr bool ChangeOrder(const Order &order);
         constexpr void EraseOrder(price_type price, Order::order_type type);
-        template<typename OutputIteratorBuy, typename OutputIteratorSell>
+        template<OrderOutputIterator OutputIteratorBuy, OrderOutputIterator OutputIteratorSell>
         constexpr std::pair<OutputIteratorBuy, OutputIteratorSell> ChooseBest(OutputIteratorBuy firstBuy, OutputIteratorSell firstSell);
 
     private:
-        using price_amount_type = std::pair<const price_type, amount_type>;
-
-        BestNStorage<price_type, amount_type,
-                     decltype(bestBuy),
-                     std::allocator<price_amount_type>>
-                m_bestBuyStorage;
-        BestNStorage<price_type, amount_type,
-                     decltype(bestSell),
-                     std::allocator<price_amount_type>>
-                m_bestSellStorage;
+        TStorageBuy m_bestBuyStorage;
+        TStorageSell m_bestSellStorage;
     };
-
-    inline constexpr auto makeBuyOrder = [](const std::pair<const Book::price_type, Book::amount_type> &pair) -> Order {
-        return {
-                .price = pair.first,
-                .amount = pair.second,
-                .type = Order::order_type::buy,
-        };
-    };
-
-    inline constexpr auto makeSellOrder = [](const std::pair<const Book::price_type, Book::amount_type> &pair) -> Order {
-        return {
-                .price = pair.first,
-                .amount = pair.second,
-                .type = Order::order_type::sell,
-        };
-    };
-
-    template<typename OutputIteratorBuy, typename OutputIteratorSell>
-    constexpr std::pair<OutputIteratorBuy, OutputIteratorSell> Book::ChooseBest(OutputIteratorBuy firstBuy, OutputIteratorSell firstSell) {
-        auto proxyBuyIterator = OutputIteratorProxy<OutputIteratorBuy, decltype(makeBuyOrder), std::pair<const Book::price_type, Book::amount_type>>{firstBuy};
-        auto proxySellIterator = OutputIteratorProxy<OutputIteratorSell, decltype(makeSellOrder), std::pair<const Book::price_type, Book::amount_type>>{firstSell};
-        return {
-                m_bestBuyStorage.GetBest(proxyBuyIterator),
-                m_bestSellStorage.GetBest(proxySellIterator),
-        };
-    }
 
 }// end namespace STONKS_NAMESPACE
 

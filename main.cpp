@@ -26,7 +26,7 @@
 int main() {
     static constexpr int countBuy = 3;
     static constexpr int countSell = 2;
-    STONKS_NAMESPACE::Book book(countBuy, countSell);
+    STONKS_NAMESPACE::BufferedBook book(countBuy, countSell);
     stonks::Order orders[countBuy + countSell];
     for (int i = 0; i < (countBuy + countSell) * 2; ++i) {
         book.AddOrder(i, 1, STONKS_NAMESPACE::Order::order_type::buy);

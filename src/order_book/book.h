@@ -25,9 +25,11 @@
 
 namespace STONKS_NAMESPACE {
 
-    constexpr Book::Book(size_t buyBestCount, size_t sellBestCount) : m_bestBuyStorage(buyBestCount), m_bestSellStorage(sellBestCount) {}
+    template<ChooseBestStorage TStorageBuy, ChooseBestStorage TStorageSell>
+    constexpr Book<TStorageBuy, TStorageSell>::Book(size_t buyBestCount, size_t sellBestCount) : m_bestBuyStorage(buyBestCount), m_bestSellStorage(sellBestCount) {}
 
-    constexpr void Book::AddOrder(size_t price, size_t amount, Order::order_type type) {
+    template<ChooseBestStorage TStorageBuy, ChooseBestStorage TStorageSell>
+    constexpr void Book<TStorageBuy, TStorageSell>::AddOrder(size_t price, size_t amount, Order::order_type type) {
         switch (type) {
             case Order::order_type::buy:
                 m_bestBuyStorage.Emplace(price, amount);
@@ -39,7 +41,8 @@ namespace STONKS_NAMESPACE {
         STONKS_ASSERT(false, "unhandled order type");
     }
 
-    constexpr bool Book::ChangeOrder(size_t price, size_t newAmount, Order::order_type type) {
+    template<ChooseBestStorage TStorageBuy, ChooseBestStorage TStorageSell>
+    constexpr bool Book<TStorageBuy, TStorageSell>::ChangeOrder(size_t price, size_t newAmount, Order::order_type type) {
         switch (type) {
             case Order::order_type::buy:
                 return m_bestBuyStorage.Change(price, newAmount).second;
@@ -50,15 +53,18 @@ namespace STONKS_NAMESPACE {
         return false;
     }
 
-    constexpr STONKS_ALWAYS_INLINE void Book::AddOrder(const Order &order) {
+    template<ChooseBestStorage TStorageBuy, ChooseBestStorage TStorageSell>
+    constexpr STONKS_ALWAYS_INLINE void Book<TStorageBuy, TStorageSell>::AddOrder(const Order &order) {
         AddOrder(order.price, order.amount, order.type);
     }
 
-    constexpr STONKS_ALWAYS_INLINE bool Book::ChangeOrder(const Order &order) {
+    template<ChooseBestStorage TStorageBuy, ChooseBestStorage TStorageSell>
+    constexpr STONKS_ALWAYS_INLINE bool Book<TStorageBuy, TStorageSell>::ChangeOrder(const Order &order) {
         return ChangeOrder(order.price, order.amount, order.type);
     }
 
-    constexpr void Book::EraseOrder(size_t price, Order::order_type type) {
+    template<ChooseBestStorage TStorageBuy, ChooseBestStorage TStorageSell>
+    constexpr void Book<TStorageBuy, TStorageSell>::EraseOrder(size_t price, Order::order_type type) {
         switch (type) {
             case Order::order_type::buy:
                 m_bestBuyStorage.Erase(price);
@@ -69,6 +75,51 @@ namespace STONKS_NAMESPACE {
         }
         STONKS_ASSERT(false, "unhandled order type");
     }
+
+    // I hope, that would be inlined
+    inline constexpr auto bestBuy = [](const price_type &lhs, const price_type &rhs) -> bool {
+        return lhs < rhs;
+    };
+
+    // I hope, that would be inlined
+    inline constexpr auto bestSell = [](const price_type &lhs, const price_type &rhs) -> bool {
+        return lhs > rhs;
+    };
+
+    // I hope, that would be inlined
+    inline constexpr auto makeBuyOrder = [](const price_amount_type &pair) -> Order {
+        return {
+                .price = pair.first,
+                .amount = pair.second,
+                .type = Order::order_type::buy,
+        };
+    };
+
+    // I hope, that would be inlined
+    inline constexpr auto makeSellOrder = [](const price_amount_type &pair) -> Order {
+        return {
+                .price = pair.first,
+                .amount = pair.second,
+                .type = Order::order_type::sell,
+        };
+    };
+
+    template<ChooseBestStorage TStorageBuy, ChooseBestStorage TStorageSell>
+    template<OrderOutputIterator OutputIteratorBuy, OrderOutputIterator OutputIteratorSell>
+    constexpr std::pair<OutputIteratorBuy, OutputIteratorSell> Book<TStorageBuy, TStorageSell>::ChooseBest(OutputIteratorBuy firstBuy, OutputIteratorSell firstSell) {
+        auto proxyBuyIterator = OutputIteratorProxy<OutputIteratorBuy, decltype(makeBuyOrder), price_amount_type>{firstBuy};
+        auto proxySellIterator = OutputIteratorProxy<OutputIteratorSell, decltype(makeSellOrder), price_amount_type>{firstSell};
+        return {
+                m_bestBuyStorage.GetBest(proxyBuyIterator),
+                m_bestSellStorage.GetBest(proxySellIterator),
+        };
+    }
+
+    using BaseBook = Book<BestNStorage<price_type, amount_type, decltype(bestBuy), std::allocator<price_amount_type>>,
+                          BestNStorage<price_type, amount_type, decltype(bestSell), std::allocator<price_amount_type>>>;
+
+    using BufferedBook = Book<BestNStorageBuffered<price_type, amount_type, decltype(bestBuy), std::allocator<price_amount_type>, STONKS_MAX_SSO_BUFFER_SIZE>,
+                              BestNStorageBuffered<price_type, amount_type, decltype(bestSell), std::allocator<price_amount_type>, STONKS_MAX_SSO_BUFFER_SIZE>>;
 
 }// end namespace STONKS_NAMESPACE
 
