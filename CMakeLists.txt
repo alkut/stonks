@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 3.27)
 project(stonks)
 
+project(
+        order_book_lib
+        LANGUAGES CXX
+        DESCRIPTION "main lib for whole project"
+        VERSION 1.0.1
+        HOMEPAGE_URL https://alkut.github.io/stonks/)
+
+message(STATUS ${order_book_lib_VERSION})
+
 include(cmake/Options.cmake)
 include(cmake/Environmnent.cmake)
 include(cmake/CxxFlags.cmake)
@@ -17,7 +26,11 @@ if (${STONKS_ENABLE_EXAMPLES})
     add_subdirectory(examples)
 endif ()
 
-if (${STONKS_ENABLE_BENCHMARKS} AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+if (${STONKS_ENABLE_BENCHMARKS}
+        AND NOT
+        CMAKE_BUILD_TYPE
+        STREQUAL
+        "Debug")
     add_subdirectory(benchmarks)
 endif ()
 
