@@ -23,7 +23,7 @@ class ChooseBestTest : public ::testing::Test {};
 TYPED_TEST_SUITE(ChooseBestTest, BookImplementationsTesters);
 
 TYPED_TEST(ChooseBestTest, SmallBook) {
-    ASSERT_TRUE(TypeParam::TestEraseNonExistingOrder());
+    ASSERT_TRUE(TypeParam::TestChooseBestSmallBook);
 }
 
 template<typename TBookTester>
@@ -32,7 +32,7 @@ class ChangeOrderTest : public ::testing::Test {};
 TYPED_TEST_SUITE(ChangeOrderTest, BookImplementationsTesters);
 
 TYPED_TEST(ChangeOrderTest, ChangeOrderNonExist) {
-    ASSERT_TRUE(TypeParam::TestEraseNonExistingOrder());
+    ASSERT_TRUE(TypeParam::TestChangeNonExistingOrder());
 }
 
 int main(int argc, char **argv) {

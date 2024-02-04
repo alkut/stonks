@@ -194,7 +194,8 @@ namespace STONKS_NAMESPACE {
     constexpr STONKS_ALWAYS_INLINE typename BestNStorageBuffered<Key, Value, Compare, Allocator, maxSSOBufferSize>::insert_return_type BestNStorageBuffered<Key, Value, Compare, Allocator, maxSSOBufferSize>::Change(UKey &&key, UValue &&value) {
         if (m_bufferSize == 0) {
             STONKS_ASSERT(m_baseStorage.m_map.empty(), "buffer empty - map must be empty too");
-            return {m_baseStorage.m_map.end(), false};
+            new (m_bufferBest + m_bufferSize++) std::pair<Key, Value>{key, value};
+            return m_baseStorage.Change(std::forward<UKey>(key), std::forward<UValue>(value));
         }
         if (!m_baseStorage.m_map.key_comp()(m_bufferBest[m_bufferSize - 1].first, key)) {
             // TODO binary search?
