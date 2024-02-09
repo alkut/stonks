@@ -63,12 +63,12 @@ namespace STONKS_NAMESPACE {
          * does nothing, required only the consistency of interface
          * @return reference to itself
          */
-        constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator*();
+        constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &&operator*();
         /**
          * transform value and write result
-         * @return reference to itself
+         * @return r-value reference to itself
          */
-        constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator=(const ProxyValue &value);
+        constexpr OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &operator=(const ProxyValue &value) &&;
         /**
          * implicit cast to obtained iterator
          * @return iterator to following of last written position

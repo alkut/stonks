@@ -44,12 +44,12 @@ namespace STONKS_NAMESPACE {
     }
 
     template<typename OutputIterator, typename Transform, ProxyValueFor<OutputIterator, Transform> ProxyValue>
-    constexpr STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator*() {
-        return *this;
+    constexpr STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &&OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator*() {
+        return std::move(*this);
     }
 
     template<typename OutputIterator, typename Transform, ProxyValueFor<OutputIterator, Transform> ProxyValue>
-    constexpr STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator=(const ProxyValue &value) {
+    constexpr STONKS_ALWAYS_INLINE OutputIteratorProxy<OutputIterator, Transform, ProxyValue> &OutputIteratorProxy<OutputIterator, Transform, ProxyValue>::operator=(const ProxyValue &value) && {
         *m_iterator++ = m_transform(value);
         return *this;
     }
